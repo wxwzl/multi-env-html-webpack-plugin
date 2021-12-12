@@ -51,11 +51,11 @@ module.exports = {
     new MultiEnvOutputWebpackPlugin([{
       index:"./dist/index.html",
       output:[
-        //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持
-        {
-          data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
-          file: "./dist/index.html",
-        },
+        //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径
+        //{
+        //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
+        //  file: "./dist/index.html",
+        //},
         {
           data:{
             [`${globalEnvName}`]:getEnv("production"),//加载.env.*文件或者直接自己写入对象
@@ -83,11 +83,11 @@ module.exports = {
       {
         index:"./dist/pc/index.html",
         output:[
-          //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持
-          {
-            data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
-            file: "./dist/index.html",
-          },
+          //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径
+          //{
+          //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
+          //  file: "./dist/index.html",
+          //}, 
           {
             data:{
               [`${globalEnvName}`]:getEnv("production"),
