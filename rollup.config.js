@@ -74,7 +74,7 @@ export default [
         },
       }),
     ],
-    external: ["webpack", "cheerio","fs"],
+    external: ["webpack", "cheerio","chalk","fs"],
   },
   {
     input: "src/index.ts",
