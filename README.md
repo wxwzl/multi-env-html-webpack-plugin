@@ -28,10 +28,10 @@ module.exports = {
   // 第一步改变process.env编译后的输出结果
 
   //webpack项目：
-
   new webpack.DefinePlugin({
     "process.env":`window.${globalEnvName}`
   })
+  
 
   // vue-cli项目
 
