@@ -1,0 +1,8 @@
+rollup.config.js
+rollup.ts.config.js
+rollup.vue.config.js
+tsconfig.json
+typedoc.json
+**/*.tgz
+test
+node_modules

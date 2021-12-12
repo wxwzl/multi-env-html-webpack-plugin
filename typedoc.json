@@ -1,0 +1,9 @@
+{
+    "entryPoints": [
+        "src/index.ts"
+    ],
+    "out": "docs",
+    "name": "MultiEnvHtmlWebpackPlugin",
+    "theme": "markdown",
+    "readme": "none"
+}
