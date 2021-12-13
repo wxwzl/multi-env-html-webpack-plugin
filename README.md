@@ -48,9 +48,9 @@ module.exports = {
 
   plugins:[
     //单页面应用
-    new MultiEnvOutputWebpackPlugin([{
+    new MultiEnvHtmlWebpackPlugin([{
       index:"./dist/index.html",
-      output:[
+      outputs:[
         //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径
         //{
         //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
@@ -82,7 +82,7 @@ module.exports = {
     new MultiEnvHtmlWebpackPlugin([
       {
         index:"./dist/pc/index.html",
-        output:[
+        outputs:[
           //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径
           //{
           //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
@@ -104,7 +104,7 @@ module.exports = {
       },
       {
         index:"./dist/mobile/index.html",
-        output:[
+        outputs:[
           {
             data:{
               [`${globalEnvName}`]:getEnv("pro"),
