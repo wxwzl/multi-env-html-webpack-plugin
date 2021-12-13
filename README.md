@@ -23,6 +23,7 @@
 ```
 // webpack 配置
 const { getEnv, MultiEnvHtmlWebpackPlugin } = require("multi-env-html-webpack-plugin");
+const path = require("path");
 const globalEnvName='_env_'
 module.exports = {
   // 第一步改变process.env编译后的输出结果
@@ -59,20 +60,20 @@ module.exports = {
         {
           data:{
             [`${globalEnvName}`]:getEnv("production"),//加载.env.*文件或者直接自己写入对象
-            file:"./dist/index-production.html"
-          }
+          },
+          file:"./dist/index-production.html"
         },
         {
           data:{
             [`${globalEnvName}`]:getEnv("dev"),
-            file:"./dist/index-dev.html"
-          }
+          },
+           file:"./dist/index-dev.html"
         },
         {
           data:{
             [`${globalEnvName}`]:getEnv("test"),
-            file:"./dist/index-test.html"
-          }
+          },
+          file:"./dist/index-test.html"
         }
       ]
     }]),
@@ -86,19 +87,19 @@ module.exports = {
           //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径
           //{
           //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
-          //  file: "./dist/index.html",
+          //  file: path.join(__dirname,"./dist/index.html"),
           //}, 
           {
             data:{
               [`${globalEnvName}`]:getEnv("production"),
-              file:"./dist/index-production.html"
-            }
+            },
+            file:path.join(__dirname,"./dist/index-production.html")
           },
           {
             data:{
               [`${globalEnvName}`]:getEnv("dev"),
-              file:"./dist/index-dev.html"
-            }
+            },
+            file:path.join(__dirname,"./dist/index-dev.html")
           },
         ]
       },
@@ -108,14 +109,14 @@ module.exports = {
           {
             data:{
               [`${globalEnvName}`]:getEnv("pro"),
-              file:"./dist/mobile/index-pro.html"
-            }
+            },
+            file:path.join(__dirname,"./dist/mobile/index-pro.html")
           },
           {
             data:{
               [`${globalEnvName}`]:getEnv("dev"),
-              file:"./dist/mobile/index-dev.html"
-            }
+            },
+            file:path.join(__dirname,"./dist/mobile/index-dev.html")
           },
         ]
       },
