@@ -34,9 +34,9 @@ export class MultiEnvHtmlWebpackPlugin {
           }
           const content = fs.readFileSync(element.index, { encoding: "utf-8" });
           const $ = cheerio.load(content);
-          let globalStr = "";
           walkArray(element.outputs, (output) => {
             const clone = $.root().clone();
+            let globalStr = "";
             walkObj(output.data, (value, key) => {
               globalStr += `window['${key}']=${JSON.stringify(value)};`;
             });
