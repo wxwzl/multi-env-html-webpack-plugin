@@ -50,13 +50,8 @@ module.exports = {
   plugins:[
     //单页面应用
     new MultiEnvHtmlWebpackPlugin([{
-      index:"./dist/index.html",
+      index:path.join(__dirname,"./dist/index.html"),
       outputs:[
-        //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径
-        //{
-        //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
-        //  file: path.join(__dirname,"./dist/index.html",)
-        //},
         {
           data:{
             [`${globalEnvName}`]:getEnv("production"),//加载.env.*文件或者直接自己写入对象
@@ -74,7 +69,12 @@ module.exports = {
             [`${globalEnvName}`]:getEnv("test"),
           },
           file:path.join(__dirname,"./dist/index-test.html")
-        }
+        },
+        //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径,注意该项一定要放在最后，因为是按顺序进行的，前面的会读取index.html
+        //{
+        //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
+        //  file: path.join(__dirname,"./dist/index.html",)
+        //},
       ]
     }]),
 
@@ -82,13 +82,8 @@ module.exports = {
     //多页面应用
     new MultiEnvHtmlWebpackPlugin([
       {
-        index:"./dist/pc/index.html",
-        outputs:[
-          //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径
-          //{
-          //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
-          //  file: path.join(__dirname,"./dist/index.html"),
-          //}, 
+        index:path.join(__dirname,"./dist/pc/index.html"),
+        outputs:[ 
           {
             data:{
               [`${globalEnvName}`]:getEnv("production"),
@@ -101,10 +96,15 @@ module.exports = {
             },
             file:path.join(__dirname,"./dist/index-dev.html")
           },
+          //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径,注意该项一定要放在最后，因为是按顺序进行的，前面的会读取index.html
+          //{
+          //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
+          //  file: path.join(__dirname,"./dist/pc/index.html",)
+          //},
         ]
       },
       {
-        index:"./dist/mobile/index.html",
+        index:path.join(__dirname,"./dist/mobile/index.html"),
         outputs:[
           {
             data:{
