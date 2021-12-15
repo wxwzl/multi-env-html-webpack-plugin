@@ -70,11 +70,12 @@ module.exports = {
           },
           file:path.join(__dirname,"./dist/index-test.html")
         },
-        //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径,注意该项一定要放在最后，因为是按顺序进行的，前面的会读取index.html
-        //{
-        //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
-        //  file: path.join(__dirname,"./dist/index.html",)
-        //},
+        //process.env.mode 为构建时的环境参数，注意该项一定要放在最后，因为是按顺序进行的，前面的会读取index.html
+        //(本地开发时,注意需确定入口文件index的路径或者添加环境判断在本地开发时不引入该插件),
+        {
+          data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
+          file: path.join(__dirname,"./dist/index.html",)
+        },
       ]
     }]),
 
@@ -96,11 +97,12 @@ module.exports = {
             },
             file:path.join(__dirname,"./dist/index-dev.html")
           },
-          //process.env.mode 为构建时的环境参数，为了本地开发时也采用方案提供支持,注意需确定入口文件index的路径,注意该项一定要放在最后，因为是按顺序进行的，前面的会读取index.html
-          //{
-          //  data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
-          //  file: path.join(__dirname,"./dist/pc/index.html",)
-          //},
+          //process.env.mode 为构建时的环境参数，注意该项一定要放在最后，因为是按顺序进行的，前面的会读取index.html
+          //(本地开发时,注意需确定入口文件index的路径或者添加环境判断在本地开发时不引入该插件),
+          {
+            data: { [`${globalEnvName}`]: getEnv(process.env.mode)},
+            file: path.join(__dirname,"./dist/pc/index.html",)
+          },
         ]
       },
       {
