@@ -19,6 +19,8 @@ specifiers:
   conventional-changelog-cli: ^2.1.1
   core-js: ^3.15.2
   cross-env: ^7.0.3
+  dotenv: ^10.0.0
+  dotenv-expand: ^5.1.0
   eslint: ^7.30.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-html: ^6.1.2
@@ -44,6 +46,8 @@ specifiers:
 dependencies:
   chalk: 4.1.2
   cheerio: 1.0.0-rc.10
+  dotenv: 10.0.0
+  dotenv-expand: 5.1.0
 
 devDependencies:
   '@commitlint/cli': 12.1.4
@@ -2669,6 +2673,15 @@ packages:
     dependencies:
       is-obj: 2.0.0
     dev: true
+
+  /dotenv-expand/5.1.0:
+    resolution: {integrity: sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==}
+    dev: false
+
+  /dotenv/10.0.0:
+    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
+    engines: {node: '>=10'}
+    dev: false
 
   /duplexify/3.7.1:
     resolution: {integrity: sha512-07z8uv2wMyS51kKhD1KsdXJg5WQ6t93RneqRxUHnskXVtlYYkLqM0gqStQZ3pj073g687jPCHrqNfCzawLYh5g==}

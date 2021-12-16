@@ -20,5 +20,7 @@ rollup.config.js
 typedoc.json
 tsconfig.json
 **/*.tgz
+.env
+.env.*
 test
 node_modules

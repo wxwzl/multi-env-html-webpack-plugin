@@ -9,11 +9,7 @@ export function isRegExp(obj: any): obj is RegExp {
 }
 
 export function isPrimitive(value: any) {
-  return (
-    typeof value === "string" ||
-    typeof value === "number" ||
-    typeof value === "boolean"
-  );
+  return typeof value === "string" || typeof value === "number" || typeof value === "boolean";
 }
 
 export function isArray<T>(obj: any): obj is Array<T> {
@@ -139,4 +135,49 @@ export function stringify(obj: any) {
     }
     return value;
   });
+}
+
+/**
+ *
+ * 将 source上所有属性复制一份到target上，当有相同属性时会不会覆盖取决于override是否为true,默认为true
+ * @export
+ * @param {*} target
+ * @param {*} source
+ * @param {boolean} [isInter=false]
+ * @param {boolean} [override=true]
+ * @return {*}
+ */
+export function extend(target: any, source: any, isInter = false, override = true) {
+  if (!override) {
+    if (isEmpty(source)) {
+      return target;
+    }
+  }
+  if (isPrimitive(source)) {
+    if (override || isEmpty(target)) {
+      target = source;
+    }
+  } else if (isObject(source)) {
+    if (isInter) {
+      if (!isObject(target)) {
+        target = {};
+      }
+    }
+    for (const p in source as any) {
+      if (Object.prototype.hasOwnProperty.call(source, p)) {
+        target[p] = extend(target[p], (source as any)[p], true, override);
+      }
+    }
+  } else if (isArray(source)) {
+    if (isInter) {
+      if (!isArray(target)) {
+        target = [];
+      }
+    }
+    const len = (source as Array<any>).length;
+    for (let i = 0; i < len; i++) {
+      target[i] = extend(target[i], source[i], true, override);
+    }
+  }
+  return target;
 }

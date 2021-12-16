@@ -1,26 +1,81 @@
-import { existsSync, readFileSync } from "fs";
+/**
+ * changed from https://github.com/vitejs/vite/blob/main/packages/vite/src/node/config.ts
+ *
+ */
 
-
-/** 读取环境变量文件 */
-function loadEnv(mode:string) {
-  const path = existsSync(".env."+mode) ? ".env."+mode : ".env"; // 判断根目录中是否存在 local 文件并优先使用
-  const content = readFileSync(path, "utf-8");
-  return parse(content);
+import path from "path";
+import fs from "fs";
+import dotenv from "dotenv";
+import dotenvExpand from "dotenv-expand";
+export function lookupFile(dir: string, formats: string[], pathOnly = false): string | undefined {
+  for (const format of formats) {
+    const fullPath = path.join(dir, format);
+    if (fs.existsSync(fullPath) && fs.statSync(fullPath).isFile()) {
+      return pathOnly ? fullPath : fs.readFileSync(fullPath, "utf-8");
+    }
+  }
+  const parentDir = path.dirname(dir);
+  if (parentDir !== dir) {
+    return lookupFile(parentDir, formats, pathOnly);
+  }
+}
+export function arraify<T>(target: T | T[]): T[] {
+  return Array.isArray(target) ? target : [target];
 }
 
-/** 解析环境变量内容 */
-function parse(string:string) {
-  const obj = {};
-  const regExp = "(\\S+)\\s*=\\s*(\\S+)"; // 通过正则匹配符合 `A=b` 的结构。如果需要处理带引号的参数，可以优化正则为 `'(\\S+)\\s*=\\s*"(\\S+)"'` 适配双引号，单引号同理
-  const list = string.match(new RegExp(regExp, "g"));
-  // 去除空格并组合为键值对
-  list &&
-    list.forEach((item) => {
-      const data = item.match(new RegExp(regExp));
-      const key = data ? data[1].trim() : undefined;
-      const value = data ? data[2].trim() : undefined;
-      key && ((obj as any)[key] = value);
-    });
-  return obj;
+export function allowEnv(env: Record<string, string>, key: string, prefixes: Array<string>) {
+  if (
+    !prefixes ||
+    prefixes.length === 0 ||
+    (prefixes.some((prefix) => key.startsWith(prefix)) && env[key] === undefined)
+  )
+    return true;
+  return false;
 }
-export default loadEnv;
+
+export default function loadEnv(
+  mode: string,
+  envDir: string = process.cwd(),
+  prefixes: string | string[] = []
+): Record<string, string> {
+  prefixes = arraify(prefixes);
+  const env: Record<string, string> = {};
+  const envFiles = [
+    /** mode local file */ `.env.${mode}.local`,
+    /** mode file */ `.env.${mode}`,
+    /** local file */ `.env.local`,
+    /** default file */ `.env`,
+  ];
+
+  // check if there are actual env variables starting with VITE_*
+  // these are typically provided inline and should be prioritized
+  // for (const key in process.env) {
+  //   if (allowEnv(env, key, prefixes)) {
+  //     env[key] = process.env[key] as string;
+  //   }
+  // }
+
+  for (const file of envFiles) {
+    const path = lookupFile(envDir, [file], true);
+    if (path) {
+      const parsed = dotenv.parse(fs.readFileSync(path), {
+        debug: !!process.env.DEBUG || undefined,
+      });
+
+      // let environment variables use each other
+      dotenvExpand({
+        parsed,
+        // prevent process.env mutation
+        ignoreProcessEnv: true,
+      } as any);
+
+      // only keys that start with prefix are exposed to client
+      for (const [key, value] of Object.entries(parsed)) {
+        if (allowEnv(env, key, prefixes)) {
+          env[key] = value;
+        }
+      }
+    }
+  }
+  return env;
+}
