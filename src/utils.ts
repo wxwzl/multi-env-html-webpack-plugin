@@ -1,5 +1,3 @@
-import { val } from "cheerio/lib/api/attributes";
-
 export function isObject<T>(obj: any): obj is T {
   return Object.prototype.toString.call(obj) == "[object Object]";
 }

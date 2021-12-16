@@ -74,7 +74,7 @@ export default [
         },
       }),
     ],
-    external: ["webpack", "cheerio","chalk","fs","dotenv","dotenv-expand"],
+    external: ["webpack", "cheerio","chalk","fs","dotenv","dotenv-expand","path"],
   },
   {
     input: "src/index.ts",
@@ -86,6 +86,6 @@ export default [
       },
     ],
     plugins: [dts()],
-    external: ["webpack", "cheerio","chalk","fs","dotenv","dotenv-expand"],
+    external: ["webpack", "cheerio","chalk","fs","dotenv","dotenv-expand","path"],
   },
 ];
