@@ -41,9 +41,7 @@ export default function loadEnv(
   prefixes = arraify(prefixes);
   const env: Record<string, string> = {};
   const envFiles = [
-    /** mode local file */ `.env.${mode}.local`,
     /** mode file */ `.env.${mode}`,
-    /** local file */ `.env.local`,
     /** default file */ `.env`,
   ];
 
