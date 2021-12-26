@@ -127,3 +127,7 @@ module.exports = {
 }
 
 ```
+
+## example
+ 
+  [vue-cli示例工程](https://github.com/wxwzl/vue2-template)
