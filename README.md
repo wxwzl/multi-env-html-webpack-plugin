@@ -77,6 +77,7 @@ module.exports = {
           file: path.join(__dirname,"./dist/index.html",)
         },
       ]
+      parent: "body",//全局变量的脚本挂载的父节点。脚本会挂载在该父节点的第一个子节点的位置。为可选配置，默认就是'body'选择器
     }]),
 
 
